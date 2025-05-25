@@ -55,6 +55,4 @@ class MenuScene: SKScene {
         
         crownScene.run(repeatForever)
     }
-    
-    
 }

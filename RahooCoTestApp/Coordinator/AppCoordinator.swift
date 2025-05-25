@@ -30,16 +30,33 @@ final class AppCoordinator {
     @objc private func splashFinished() {
         showMenu()
     }
+    
+    private func showGame() {
+        let viewModel = GameViewModel()
+        let gameVc = GameViewController(viewModel: viewModel)
+        
+        viewModel.onBackButtonTapped = { [weak self] in
+            self?.showMenu()
+        }
+        navigationController.setViewControllers([gameVc], animated: true)
+    }
 
     private func showMenu() {
         let viewModel = MenuViewModel()
+
+            viewModel.onPlayButtonTapped = { [weak self] in
+                self?.showGame()
+            }
         
-//        viewModel.onPlayButtonTapped { [weak self] in
-//            self?.showGame()
-//
-//        }
-        let menuVC = MenuViewController(viewModel: viewModel)
-        navigationController.setViewControllers([menuVC], animated: false)
+
+            let menuVC = MenuViewController(viewModel: viewModel)
+            navigationController.setViewControllers([menuVC], animated: false)
         
     }
+    
+//    private func showSetting() {
+//        let viewModel = SettingViewModel()
+//        let settingVc = SettingViewController(viewModel: viewModel)
+//        navigationController.setViewControllers([settingVc], animated: true)
+//    }
 }

@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import SpriteKit
 import SafariServices
+import AVFoundation
 
 final class MenuViewController: UIViewController {
 
@@ -16,6 +17,7 @@ final class MenuViewController: UIViewController {
 
     private let skView = SKView()
     private let viewModel: MenuViewModel?
+    private var audioPlayer: AVAudioPlayer?
 
     private let playButton: UIButton = {
         let button = UIButton()
@@ -32,6 +34,7 @@ final class MenuViewController: UIViewController {
     // MARK: - Initialization
 
     init(viewModel: MenuViewModel?) {
+        print("init MenuViewController with viewModel: \(viewModel != nil)")
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -69,6 +72,22 @@ final class MenuViewController: UIViewController {
             make.edges.equalToSuperview()
         }
     }
+    
+    private func playButtonClick() {
+        guard let soundURL = Bundle.main.url(forResource: "zvukKnopki", withExtension: "mp3") else {
+            print(" Не найден zvukKnopki.mp3 в bundle")
+            return
+        }
+        
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
+            audioPlayer?.prepareToPlay()
+            audioPlayer?.play()
+            audioPlayer?.volume = 0.3
+        } catch {
+            print(" Ошибка воспроизведения звука: \(error.localizedDescription)")
+        }
+    }
 
     private func setupButtons() {
         view.addSubview(playButton)
@@ -96,11 +115,9 @@ final class MenuViewController: UIViewController {
     // MARK: - ViewModel Binding
 
     private func bindViewModel() {
-        viewModel?.onPlayButtonTapped = {
-            print("🎮 Start the game!")
-        }
 
         viewModel?.onPrivacyButtonTapped = {
+            self.playButtonClick()
             guard let url = URL(string: "https://google.com") else { return }
             let safariVC = SFSafariViewController(url: url)
             self.present(safariVC, animated: true)
@@ -110,6 +127,7 @@ final class MenuViewController: UIViewController {
     // MARK: - Actions
 
     @objc private func playTapped() {
+        self.playButtonClick()
         viewModel?.tappedPlayButton()
     }
 
