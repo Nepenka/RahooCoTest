@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		36208D1B2DE2757900FAEC34 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 36208D1A2DE2757900FAEC34 /* SnapKit */; };
-		36208D1D2DE2757900FAEC34 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 36208D1C2DE2757900FAEC34 /* SnapKit-Dynamic */; };
+		36C6B7582DE2822100DDA879 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 36C6B7572DE2822100DDA879 /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,8 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				36208D1B2DE2757900FAEC34 /* SnapKit in Frameworks */,
-				36208D1D2DE2757900FAEC34 /* SnapKit-Dynamic in Frameworks */,
+				36C6B7582DE2822100DDA879 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,8 +70,7 @@
 			);
 			name = RahooCoTestApp;
 			packageProductDependencies = (
-				36208D1A2DE2757900FAEC34 /* SnapKit */,
-				36208D1C2DE2757900FAEC34 /* SnapKit-Dynamic */,
+				36C6B7572DE2822100DDA879 /* SnapKit */,
 			);
 			productName = RahooCoTestApp;
 			productReference = 36208CFF2DE26B2D00FAEC34 /* RahooCoTestApp.app */;
@@ -104,7 +101,7 @@
 			mainGroup = 36208CF62DE26B2D00FAEC34;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				36208D192DE2757900FAEC34 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				36C6B7562DE2822100DDA879 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 36208D002DE26B2D00FAEC34 /* Products */;
@@ -336,7 +333,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		36208D192DE2757900FAEC34 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+		36C6B7562DE2822100DDA879 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
 			requirement = {
@@ -347,15 +344,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		36208D1A2DE2757900FAEC34 /* SnapKit */ = {
+		36C6B7572DE2822100DDA879 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 36208D192DE2757900FAEC34 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			package = 36C6B7562DE2822100DDA879 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
-		};
-		36208D1C2DE2757900FAEC34 /* SnapKit-Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 36208D192DE2757900FAEC34 /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = "SnapKit-Dynamic";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
