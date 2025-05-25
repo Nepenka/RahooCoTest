@@ -32,8 +32,14 @@ final class AppCoordinator {
     }
 
     private func showMenu() {
-        let menuVC = MenuViewController()
-        navigationController.setViewControllers([menuVC], animated: true)
+        let viewModel = MenuViewModel()
+        
+//        viewModel.onPlayButtonTapped { [weak self] in
+//            self?.showGame()
+//
+//        }
+        let menuVC = MenuViewController(viewModel: viewModel)
+        navigationController.setViewControllers([menuVC], animated: false)
         
     }
 }

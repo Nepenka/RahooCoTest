@@ -10,12 +10,13 @@ import UIKit
 
 class MenuScene: SKScene {
    
+    var crownScene: SKSpriteNode? = nil
     
     override func didMove(to view: SKView) {
         setupMenuBackground()
         setupFire()
         setupCrown()
-        
+        setupCrownAnimation()
     }
     
     
@@ -40,10 +41,20 @@ class MenuScene: SKScene {
         crown.position = CGPoint(x: size.width / 2, y: size.height / 2 + 100)
         crown.zPosition = 2
         crown.size = CGSize(width: self.size.width / 1.5, height: self.size.height / 2.5)
+        crownScene = crown
         addChild(crown)
     }
     
-    
+    private func setupCrownAnimation() {
+        guard let crownScene = crownScene else { return }
+        
+        let moveUp = SKAction.moveBy(x: 0, y: 10, duration: 1.0)
+        let moveDown = SKAction.moveBy(x: 0, y: -10, duration: 1.0)
+        let sequence = SKAction.sequence([moveUp, moveDown])
+        let repeatForever = SKAction.repeatForever(sequence)
+        
+        crownScene.run(repeatForever)
+    }
     
     
 }
