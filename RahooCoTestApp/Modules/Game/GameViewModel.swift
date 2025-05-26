@@ -28,7 +28,7 @@ final class GameViewModel {
     var onMatchFound: ((Int, Int) -> Void)?
     var onMismatch: ((Int, Int) -> Void)?
     var onTimerUpdate: ((Int, Int) -> Void)?
-    var onGameCompleted: (() -> Void)?
+    var onGameCompleted: ((Int, String) -> Void)?
     var onSettingTapped: (() -> Void)?
     var onBackButtonTapped: (() -> Void)?
     var onGameReset: (() -> Void)?
@@ -182,7 +182,15 @@ final class GameViewModel {
     
     private func checkGameCompletion() {
         if cards.allSatisfy({ $0.isMatched }) {
-            onGameCompleted?()
+            stopGameTimer()
+            
+            let minutes = secondsPlayed / 60
+            let seconds = secondsPlayed % 60
+            let timeString = String(format: "%02d:%02d", minutes, seconds)
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.onGameCompleted?(self?.movesCount ?? 0, timeString)
+            }
         }
     }
     

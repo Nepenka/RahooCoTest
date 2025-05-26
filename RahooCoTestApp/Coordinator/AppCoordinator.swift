@@ -7,16 +7,17 @@
 
 import Foundation
 import UIKit
+import SpriteKit
 
 final class AppCoordinator {
     
     var window: UIWindow
-       private var navigationController: UINavigationController
+    private var navigationController: UINavigationController
 
-       init(window: UIWindow) {
-           self.window = window
-           self.navigationController = UINavigationController()
-       }
+    init(window: UIWindow) {
+        self.window = window
+        self.navigationController = UINavigationController()
+    }
 
     func start() {
         NotificationCenter.default.addObserver(self, selector: #selector(splashFinished), name: .splashDidFinish, object: nil)
@@ -31,30 +32,57 @@ final class AppCoordinator {
         showMenu()
     }
     
+    private func showWinScreen(moviesCount: Int, timeString: String, backgroundScene: SKScene?) {
+        let winVM = WinViewModel(moviesCount: moviesCount,
+                               timeString: timeString,
+                               backgroundScene: backgroundScene)
+        
+        winVM.onAgainButtonTapped = { [weak self] in
+            self?.navigationController.dismiss(animated: true) {
+                self?.showGame()
+            }
+        }
+        
+        winVM.onMenuButtonTapped = { [weak self] in
+            self?.navigationController.dismiss(animated: true) {
+                self?.showMenu()
+            }
+        }
+        
+        let winVC = WinViewController(viewModel: winVM)
+        navigationController.present(winVC, animated: true)
+    }
+    
     private func showGame() {
         let viewModel = GameViewModel()
-        let gameVc = GameViewController(viewModel: viewModel)
+        let gameVC = GameViewController(viewModel: viewModel)
         
         viewModel.onBackButtonTapped = { [weak self] in
             self?.showMenu()
         }
+        
         viewModel.onSettingTapped = { [weak self] in
             self?.showSetting()
         }
         
-        navigationController.setViewControllers([gameVc], animated: true)
+        viewModel.onGameCompleted = { [weak self] movesCount, timeString in
+            self?.showWinScreen(moviesCount: movesCount,
+                              timeString: timeString,
+                              backgroundScene: gameVC.skView.scene)
+        }
+        
+        navigationController.setViewControllers([gameVC], animated: true)
     }
 
     private func showMenu() {
         let viewModel = MenuViewModel()
-
-            viewModel.onPlayButtonTapped = { [weak self] in
-                self?.showGame()
-            }
         
-            let menuVC = MenuViewController(viewModel: viewModel)
-            navigationController.setViewControllers([menuVC], animated: false)
+        viewModel.onPlayButtonTapped = { [weak self] in
+            self?.showGame()
+        }
         
+        let menuVC = MenuViewController(viewModel: viewModel)
+        navigationController.setViewControllers([menuVC], animated: false)
     }
     
     private func showSetting() {
@@ -63,7 +91,6 @@ final class AppCoordinator {
         
         viewModel.onSettingBackButton = { [weak self] in
             self?.showGame()
-            
         }
         navigationController.setViewControllers([settingVc], animated: true)
     }

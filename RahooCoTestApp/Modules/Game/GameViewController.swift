@@ -14,7 +14,7 @@ class GameViewController: UIViewController {
 
     // MARK: - UI Components
     private let viewModel: GameViewModel
-    private let skView = SKView()
+    let skView = SKView()
     private let gridView = UIView()
     private var cardButtons: [UIButton] = []
     private let timeLabel = UILabel()
@@ -176,9 +176,22 @@ class GameViewController: UIViewController {
     }
     
     private func updatePauseButtonImage() {
-            let imageName = viewModel.isPaused ? "playButton" : "pauseButton"
-            pauseButton.setImage(UIImage(named: imageName), for: .normal)
-        }
+        let imageName = viewModel.isPaused ? "playButton" : "pauseButton"
+        pauseButton.setImage(UIImage(named: imageName), for: .normal)
+    }
+    
+    private func showWinScreen(moviesCount: Int, timeString: String) {
+        let winVM = WinViewModel(
+            moviesCount: moviesCount,
+            timeString: timeString,
+            backgroundScene: skView.scene 
+        )
+        
+        let winVC = WinViewController(viewModel: winVM)
+        winVC.modalPresentationStyle = .overFullScreen
+        present(winVC, animated: true)
+    }
+   
         
     private func setupCards() {
         let rows = 4
@@ -248,8 +261,9 @@ class GameViewController: UIViewController {
             self?.moviesLabel.text = "MOVIES: \(count)"
         }
         
-        
-        
+        viewModel.onGameCompleted = { [weak self] movesCount, timeString in
+            self?.showWinScreen(moviesCount: movesCount, timeString: timeString)
+        }
     }
     
     // MARK: - Actions
