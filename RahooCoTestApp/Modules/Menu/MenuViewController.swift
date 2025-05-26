@@ -74,11 +74,11 @@ final class MenuViewController: UIViewController {
     }
     
     private func playButtonClick() {
+        guard SettingsManager.shared.isSoundEnabled else { return }
         guard let soundURL = Bundle.main.url(forResource: "zvukKnopki", withExtension: "mp3") else {
             print(" Не найден zvukKnopki.mp3 в bundle")
             return
         }
-        
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
             audioPlayer?.prepareToPlay()
@@ -127,11 +127,16 @@ final class MenuViewController: UIViewController {
     // MARK: - Actions
 
     @objc private func playTapped() {
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+            generator.impactOccurred()
         self.playButtonClick()
         viewModel?.tappedPlayButton()
     }
 
     @objc private func privacyTapped() {
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+            generator.impactOccurred()
+        self.playButtonClick()
         viewModel?.tappedPrivacyButton()
     }
 }

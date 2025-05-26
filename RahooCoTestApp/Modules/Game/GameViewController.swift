@@ -248,20 +248,38 @@ class GameViewController: UIViewController {
             self?.moviesLabel.text = "MOVIES: \(count)"
         }
         
+        
+        
     }
     
     // MARK: - Actions
     @objc private func settingTapped() {
-        viewModel.playButtonClick()
+        if SettingsManager.shared.isVibrationEnabled {
+            let generator = UIImpactFeedbackGenerator(style: .medium)
+            generator.impactOccurred()
+        }
+        if SettingsManager.shared.isSoundEnabled {
+            viewModel.playButtonClick()
+        }
         viewModel.settingButtonTapped()
     }
     
     @objc private func backTapped() {
-        viewModel.playButtonClick()
+        if SettingsManager.shared.isVibrationEnabled {
+            let generator = UIImpactFeedbackGenerator(style: .medium)
+            generator.impactOccurred()
+        }
+        if SettingsManager.shared.isSoundEnabled {
+            viewModel.playButtonClick()
+        }
         viewModel.backButtonTapped()
     }
 
     @objc private func cardTapped(_ sender: UIButton) {
+        if SettingsManager.shared.isVibrationEnabled {
+            let generator = UIImpactFeedbackGenerator(style: .light)
+            generator.impactOccurred()
+        }
         let index = sender.tag
         let shouldFlip = viewModel.handleCardFlip(at: index)
         
@@ -271,12 +289,22 @@ class GameViewController: UIViewController {
     }
     
     @objc private func pauseTapped() {
-        viewModel.playButtonClick()
+        if SettingsManager.shared.isVibrationEnabled {
+            let generator = UIImpactFeedbackGenerator(style: .medium)
+            generator.impactOccurred()
+        }
+        if SettingsManager.shared.isSoundEnabled {
+            viewModel.playButtonClick()
+        }
         viewModel.togglePause()
         updatePauseButtonImage()
     }
     
     @objc private func refreshTapped() {
+        if SettingsManager.shared.isVibrationEnabled {
+            let generator = UIImpactFeedbackGenerator(style: .medium)
+            generator.impactOccurred()
+        }
         viewModel.resetGame()
         viewModel.startGameTimer()
     }

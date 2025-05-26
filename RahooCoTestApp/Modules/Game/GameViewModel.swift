@@ -115,6 +115,7 @@ final class GameViewModel {
     
     // MARK: - Sound Methods
     func playButtonClick() {
+        guard SettingsManager.shared.isSoundEnabled else { return }
         guard let soundURL = Bundle.main.url(forResource: "zvukKnopki", withExtension: "mp3") else { return }
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
@@ -127,18 +128,13 @@ final class GameViewModel {
     }
     
     func backgroundSound() {
-        guard let backgroundURL = Bundle.main.url(forResource: "background", withExtension: "mp3") else { return }
-        do {
-            backgroundMusic = try AVAudioPlayer(contentsOf: backgroundURL)
-            backgroundMusic?.prepareToPlay()
-            backgroundMusic?.volume = 0.3
-            backgroundMusic?.numberOfLoops = -1
-            backgroundMusic?.play()
-        } catch {
-            print("Ошибка фоновой музыки: \(error.localizedDescription)")
+        if SettingsManager.shared.isSoundEnabled {
+            SoundManager.shared.playBackgroundMusic()
+        } else {
+            SoundManager.shared.stopBackgroundMusic()
         }
     }
-    
+
     // MARK: - Game Logic
     func handleCardFlip(at index: Int) -> Bool {
         guard !cards[index].isFlipped,
