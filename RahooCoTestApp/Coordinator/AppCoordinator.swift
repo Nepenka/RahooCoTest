@@ -38,6 +38,10 @@ final class AppCoordinator {
         viewModel.onBackButtonTapped = { [weak self] in
             self?.showMenu()
         }
+        viewModel.onSettingTapped = { [weak self] in
+            self?.showSetting()
+        }
+        
         navigationController.setViewControllers([gameVc], animated: true)
     }
 
@@ -48,15 +52,19 @@ final class AppCoordinator {
                 self?.showGame()
             }
         
-
             let menuVC = MenuViewController(viewModel: viewModel)
             navigationController.setViewControllers([menuVC], animated: false)
         
     }
     
-//    private func showSetting() {
-//        let viewModel = SettingViewModel()
-//        let settingVc = SettingViewController(viewModel: viewModel)
-//        navigationController.setViewControllers([settingVc], animated: true)
-//    }
+    private func showSetting() {
+        let viewModel = SettingViewModel()
+        let settingVc = SettingViewController(viewModel: viewModel)
+        
+        viewModel.onSettingBackButton = { [weak self] in
+            self?.showGame()
+            
+        }
+        navigationController.setViewControllers([settingVc], animated: true)
+    }
 }
