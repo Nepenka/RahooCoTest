@@ -169,7 +169,7 @@ final class WinViewController: UIViewController {
         generator.impactOccurred()
         viewModel.playButtonClick()
         dismiss(animated: true) {
-            self.viewModel.handleAgainButton() // Вызываем после закрытия
+            self.viewModel.handleAgainButton() 
         }
     }
 
