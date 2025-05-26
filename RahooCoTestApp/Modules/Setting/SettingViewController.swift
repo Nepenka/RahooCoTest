@@ -149,14 +149,14 @@ class SettingViewController: UIViewController {
     }
     
     @objc private func backButtonAction() {
-        let generator = UIImpactFeedbackGenerator(style: .medium)
+        let generator = UIImpactFeedbackGenerator(style: .light)
             generator.impactOccurred()
         viewModel?.playButtonClick()
         viewModel?.tappedBackButton()
     }
     
     @objc private func unmuteAction() {
-        let generator = UIImpactFeedbackGenerator(style: .medium)
+        let generator = UIImpactFeedbackGenerator(style: .light)
             generator.impactOccurred()
             
             viewModel?.toggleMusicSetting()
@@ -164,7 +164,7 @@ class SettingViewController: UIViewController {
     }
 
     @objc private func vibroAction() {
-        let generator = UIImpactFeedbackGenerator(style: .medium)
+        let generator = UIImpactFeedbackGenerator(style: .light)
         generator.impactOccurred()
         
         viewModel?.tappedVibrationButton()
